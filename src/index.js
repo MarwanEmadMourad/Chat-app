@@ -16,8 +16,9 @@ io.on("connection" , (socket) =>{
     console.log("New client connection established.")
     socket.emit("message2client" , "Welcome!")
 
-    socket.on("message2server",(message)=>{
+    socket.on("message2server",(message,cb)=>{
         io.emit("message2client",message)
+        cb()
     })
     socket.on("location",(pos , cb)=>{
         const location_link = `https://google.com/maps?q=${pos.latitude},${pos.longitude}`
