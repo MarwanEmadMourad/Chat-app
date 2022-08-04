@@ -15,8 +15,14 @@ app.use(express.static(publicDirectioryPath))
 io.on("connection" , (socket) =>{
     console.log("New client connection established.")
     socket.emit("message2client" , "Welcome!")
+
     socket.on("message2server",(message)=>{
         io.emit("message2client",message)
+    })
+    socket.on("location",(pos , cb)=>{
+        const location_link = `https://google.com/maps?q=${pos.latitude},${pos.longitude}`
+        io.emit("message2client",location_link)
+        cb()
     })
 })
 
